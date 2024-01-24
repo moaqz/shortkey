@@ -48,6 +48,7 @@ export default function DeleteLink(props: DeleteLinkProps) {
           <span className="font-semibold text-indigo-400">{randomWord}</span> in
           the box below.
         </label>
+        
         <input
           type="text"
           id="verification"

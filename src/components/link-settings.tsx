@@ -41,6 +41,7 @@ export default function LinkSettings({ link }: LinkSettingsProps) {
     <div>
       <button
         type="button"
+        aria-label="Open Link Settings"
         className="rounded-full p-1.5 text-gray-200 hover:bg-zinc-700  hover:transition-colors focus:outline-double focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
         onClick={openModal}
       >
@@ -57,6 +58,7 @@ export default function LinkSettings({ link }: LinkSettingsProps) {
             type="button"
             onClick={closeModal}
             className="hover:scale-105 hover:transition-transform"
+            aria-label="Close Settings"
           >
             <XIcon width={24} height={24} />
           </button>
