@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
+import { BASE_URL } from "~/lib/constants";
 import "~/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Shortkey",
+  description: "Minimalistic and open-source URL shortener.",
+  openGraph: {
+    title: "Shortkey",
+    description: "Minimalistic and open-source URL shortener.",
+    type: "website",
+    url: BASE_URL,
+  },
 };
 
 export default function RootLayout({
