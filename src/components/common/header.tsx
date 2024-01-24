@@ -1,6 +1,7 @@
 import { Session } from "lucia";
+import { Button } from "~/components/ui";
 
-export default function Header({ session }: { session: Session | null }) {
+export function Header({ session }: { session: Session | null }) {
   return (
     <header className="py-6">
       <div className="flex items-center justify-end space-x-3">
@@ -15,11 +16,7 @@ export default function Header({ session }: { session: Session | null }) {
             <span className="text-zinc-300">{session.user.username}</span>
             <span className="text-zinc-300">|</span>
             <form method="post" action="/api/auth/logout">
-              <input
-                type="submit"
-                value="Sign out"
-                className="cursor-pointer rounded-md bg-indigo-500 px-3 py-1.5 hover:bg-indigo-600 hover:transition-colors"
-              />
+              <Button type="submit">Sign out</Button>
             </form>
           </>
         ) : (

@@ -2,10 +2,11 @@
 
 import useSWR from "swr";
 import { Link } from "~/types/links";
-import LinkCard from "./link-card";
-import LinkCardSkeleton from "./link-card-skeleton";
 
-export const fetcher = async (url: string) => {
+import { LinkCard } from "./card";
+import { LinkCardSkeleton } from "./card-skeleton";
+
+const fetcher = async (url: string) => {
   const res = await fetch(url);
 
   if (!res.ok) {
@@ -15,7 +16,7 @@ export const fetcher = async (url: string) => {
   return res.json();
 };
 
-export default function LinkList() {
+export function LinksList() {
   const { data, isLoading } = useSWR<{ links: Link[] }>("/api/links", fetcher);
 
   return (

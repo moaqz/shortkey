@@ -2,10 +2,13 @@
 
 import { useRef, useState } from "react";
 import { mutate } from "swr";
+
 import type { Link } from "~/types/links";
-import DeleteLink from "./delete-link";
-import { MoreVerticalIcon, XIcon } from "./icons";
-import LinkForm from "./link-form";
+
+import { MoreVerticalIcon, XIcon } from "~/components/common";
+import { IconButton } from "~/components/ui";
+import { DeleteLinkForm } from "./delete-link-form";
+import { LinkForm } from "./form";
 
 const TABS = {
   INFO: "info",
@@ -16,7 +19,7 @@ interface LinkSettingsProps {
   link: Link;
 }
 
-export default function LinkSettings({ link }: LinkSettingsProps) {
+export function LinkSettings({ link }: LinkSettingsProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [currentTab, setCurrentTab] = useState(TABS.INFO);
 
@@ -39,14 +42,9 @@ export default function LinkSettings({ link }: LinkSettingsProps) {
 
   return (
     <div>
-      <button
-        type="button"
-        aria-label="Open Link Settings"
-        className="rounded-full p-1.5 text-gray-200 hover:bg-zinc-700  hover:transition-colors focus:outline-double focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
-        onClick={openModal}
-      >
+      <IconButton aria-label="Open Link Settings" onClick={openModal}>
         <MoreVerticalIcon width={16} height={16} />
-      </button>
+      </IconButton>
 
       <dialog
         ref={dialogRef}
@@ -80,6 +78,7 @@ export default function LinkSettings({ link }: LinkSettingsProps) {
           >
             General
           </button>
+
           <button
             type="button"
             onClick={() => switchTab(TABS.DELETE)}
@@ -103,7 +102,7 @@ export default function LinkSettings({ link }: LinkSettingsProps) {
           />
         )}
         {currentTab === TABS.DELETE && (
-          <DeleteLink id={link.id} onSubmit={onDeleteUpdate} />
+          <DeleteLinkForm id={link.id} onSubmit={onDeleteUpdate} />
         )}
       </dialog>
     </div>

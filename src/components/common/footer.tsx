@@ -1,6 +1,6 @@
 import { SOCIAL_LINKS } from "~/lib/constants";
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer>
       <div className="flex items-center justify-between py-6">

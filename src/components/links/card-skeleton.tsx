@@ -1,4 +1,4 @@
-export default function LinkCardSkeleton() {
+export function LinkCardSkeleton() {
   return (
     <li className="flex flex-col gap-y-2 rounded-md bg-zinc-800 p-3 shadow-lg">
       <div className="flex justify-between items-center">

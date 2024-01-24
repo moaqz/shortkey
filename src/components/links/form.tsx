@@ -2,10 +2,13 @@
 
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
+
 import { STATES } from "~/lib/constants";
 import { parseURL } from "~/lib/functions/urls";
 import { updateLink } from "~/lib/services/link.service";
-import DotsSpinner from "./dots-spinner";
+
+import { DotsSpinner } from "~/components/common";
+import { Button, TextInput } from "~/components/ui";
 
 interface LinkFormProps {
   id: number;
@@ -14,7 +17,7 @@ interface LinkFormProps {
   onSubmit?: () => void;
 }
 
-export default function LinkForm(props: LinkFormProps) {
+export function LinkForm(props: LinkFormProps) {
   const [status, setStatus] = useState(STATES.IDLE);
   const [url, setUrl] = useState(props.url);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,30 +55,27 @@ export default function LinkForm(props: LinkFormProps) {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
-        <label htmlFor="linkUrl" className="block text-zinc-400">
-          URL
+        <label htmlFor="linkUrl" className="block text-zinc-400 text-sm">
+          Destination URL
         </label>
-        <input
+
+        <TextInput
           id="linkUrl"
-          type="text"
-          ref={inputRef}
+          type="url"
           value={url}
+          ref={inputRef}
           onChange={(event) => setUrl(event.target.value)}
           aria-invalid={isError ? "true" : undefined}
-          className="h-10 w-full rounded-md bg-zinc-800 px-4 text-lg placeholder:font-medium focus:outline-double focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500 focus:aria-[invalid]:outline-red-500"
         />
+
         <span className="text-red-500 font-medium text-sm">
           {isError && "Invalid URL. Please enter a valid URL."}
         </span>
       </div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="mt-4 min-h-8 w-full cursor-pointer rounded-md bg-indigo-500 px-3 py-1.5 disabled:opacity-60 enabled:hover:bg-indigo-600 hover:transition-colors"
-      >
+      <Button type="submit" disabled={isLoading}>
         {isLoading ? <DotsSpinner /> : "Save changes"}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -1,11 +1,9 @@
 import * as context from "next/headers";
+import { Toaster } from "sonner";
 import { auth } from "~/lib/auth";
 
-import { Toaster } from "sonner";
-import CreateLink from "~/components/create-link";
-import Footer from "~/components/footer";
-import Header from "~/components/header";
-import LinkList from "~/components/link-list";
+import { Footer, Header } from "~/components/common";
+import { CreateLinkForm, LinksList } from "~/components/links";
 
 export default async function Home() {
   const authRequest = auth.handleRequest("GET", context);
@@ -24,8 +22,8 @@ export default async function Home() {
               minimalistic and open-source URL shortener
             </p>
           </div>
-          <CreateLink disabled={session == null} />
-          {session ? <LinkList /> : null}
+          <CreateLinkForm disabled={session == null} />
+          {session ? <LinksList /> : null}
         </main>
         <Footer />
       </div>

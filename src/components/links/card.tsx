@@ -2,13 +2,16 @@
 
 import NextLink from "next/link";
 import { toast } from "sonner";
+
 import { BASE_URL } from "~/lib/constants";
 import { formatDate } from "~/lib/functions/dates";
 import type { Link } from "~/types/links";
-import { ChartIcon, ClipboardIcon } from "./icons";
-import LinkSettings from "./link-settings";
 
-export default function LinkCard(props: Link) {
+import { ChartIcon, ClipboardIcon } from "~/components/common";
+import { IconButton } from "~/components/ui";
+import { LinkSettings } from "./settings-modal";
+
+export function LinkCard(props: Link) {
   const target = `${BASE_URL}/${props.slug}`;
 
   const copyToClipboard = async (content: string) => {
@@ -33,14 +36,12 @@ export default function LinkCard(props: Link) {
             {props.clicks}
           </div>
 
-          <button
-            type="button"
-            className="rounded-full p-1.5 text-gray-200 hover:bg-zinc-700  hover:transition-colors focus:outline-double focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+          <IconButton
             onClick={() => copyToClipboard(target)}
             aria-label="Copy to Clipboard"
           >
             <ClipboardIcon width={16} height={16} />
-          </button>
+          </IconButton>
 
           <LinkSettings link={{ ...props }} />
         </div>
