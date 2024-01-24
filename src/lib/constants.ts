@@ -14,5 +14,5 @@ export const STATES = {
 
 export const BASE_URL =
   process.env.NODE_ENV === "production"
-    ? process.env.PRODUCTION_URL
+    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
     : "http://localhost:3000";
