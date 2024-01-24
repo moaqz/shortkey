@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import CreateLink from "~/components/create-link";
 import Footer from "~/components/footer";
 import Header from "~/components/header";
+import LinkList from "~/components/link-list";
 
 export default async function Home() {
   const authRequest = auth.handleRequest("GET", context);
@@ -14,7 +15,7 @@ export default async function Home() {
     <>
       <div className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-4 px-4">
         <Header session={session} />
-        <main className="flex flex-1 flex-col items-center justify-center gap-y-6">
+        <main className="flex flex-1 flex-col items-center pt-20 sm:pt-32 gap-y-6">
           <div>
             <h1 className="text-center font-serif text-6xl font-semibold sm:text-7xl">
               shortkey
@@ -24,6 +25,7 @@ export default async function Home() {
             </p>
           </div>
           <CreateLink disabled={session == null} />
+          {session ? <LinkList /> : null}
         </main>
         <Footer />
       </div>

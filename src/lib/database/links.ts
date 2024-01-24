@@ -56,3 +56,27 @@ export async function recordVisit(slug: string) {
     args: [slug],
   });
 }
+
+export async function deleteLink({
+  userId,
+  id,
+}: {
+  userId: string;
+  id: number;
+}) {
+  return await client.execute({
+    sql: `DELETE FROM ${LINKS_TABLE} WHERE id = ? AND user_id = ?`,
+    args: [id, userId],
+  });
+}
+
+export async function updateLink({
+  userId,
+  url,
+  id,
+}: { userId: string; url: string; id: number }) {
+  return await client.execute({
+    sql: `UPDATE ${LINKS_TABLE} SET url = ? WHERE id = ? AND user_id = ?`,
+    args: [url, id, userId],
+  });
+}
