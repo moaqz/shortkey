@@ -27,7 +27,7 @@ CREATE TABLE user_sessions (
 
 CREATE TABLE links (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-  key TEXT NOT NULL UNIQUE,
+  slug TEXT NOT NULL UNIQUE,
 	url TEXT NOT NULL,
 	clicks INTEGER NOT NULL DEFAULT 0,
 	created_at INTEGER NOT NULL DEFAULT (cast(unixepoch() as int)),
@@ -36,4 +36,4 @@ CREATE TABLE links (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE INDEX links_key_idx ON links(key);
+CREATE INDEX links_slug_idx ON links(slug);

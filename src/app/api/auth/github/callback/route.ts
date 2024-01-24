@@ -44,7 +44,7 @@ export async function GET(request: Request) {
       cookies,
       headers,
     });
-    
+
     authRequest.setSession(session);
 
     return new Response(null, {

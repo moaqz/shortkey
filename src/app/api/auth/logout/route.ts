@@ -7,7 +7,7 @@ export const POST = async (request: NextRequest) => {
   const session = await authRequest.validate();
   if (!session) {
     return new Response(null, {
-      status: 401
+      status: 401,
     });
   }
   await auth.invalidateSession(session.sessionId);
@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/"
-    }
+      Location: "/",
+    },
   });
 };

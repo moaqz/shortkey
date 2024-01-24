@@ -5,6 +5,6 @@ declare namespace Lucia {
     username: string;
     avatar: string;
   };
-  // biome-ignore lint/complexity/noBannedTypes: 
+  // biome-ignore lint/complexity/noBannedTypes:
   type DatabaseSessionAttributes = {};
 }
