@@ -43,7 +43,7 @@ export async function getLink(slug: string) {
 
 export async function getUserLinks(userId: string) {
   const result = await client.execute({
-    sql: `SELECT * FROM ${LINKS_TABLE} WHERE user_id = ?`,
+    sql: `SELECT * FROM ${LINKS_TABLE} WHERE user_id = ? ORDER BY created_at DESC`,
     args: [userId],
   });
 
