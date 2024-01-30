@@ -37,7 +37,6 @@ export function DeleteLinkForm(props: DeleteLinkProps) {
       return;
     }
 
-    console.log("submitting the form...");
     await props.onSubmit?.();
     resetField("verificationCode");
     setRandomVerificationCode(nanoid(6));
