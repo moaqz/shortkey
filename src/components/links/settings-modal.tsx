@@ -1,12 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import { mutate } from "swr";
 
 import type { Link } from "~/types/links";
 
 import { MoreVerticalIcon, XIcon } from "~/components/common";
 import { IconButton } from "~/components/ui";
+import { TLinkSchema } from "~/lib/schemas/link";
+import { linkServices } from "~/lib/services/link.service";
 import { DeleteLinkForm } from "./delete-link-form";
 import { LinkForm } from "./form";
 
@@ -35,9 +38,25 @@ export function LinkSettings({ link }: LinkSettingsProps) {
     setCurrentTab(tab);
   };
 
-  const onDeleteUpdate = () => {
+  const onClose = () => {
     closeModal();
     mutate("/api/links");
+  };
+
+  const updateLink = async (data: Partial<TLinkSchema>, linkId: number) => {
+    linkServices
+      .updateLink(data, linkId)
+      .then(() => toast.success("Successfully updated link!"))
+      .catch(() => toast.error("Link could not be updated. Please try again."))
+      .finally(() => onClose());
+  };
+
+  const deleteLink = async (linkId: number) => {
+    linkServices
+      .deleteLink(linkId)
+      .then(() => toast.success("Successfully deleted link!"))
+      .catch(() => toast.error("Link could not be deleted. Please try again."))
+      .finally(() => onClose());
   };
 
   return (
@@ -95,14 +114,13 @@ export function LinkSettings({ link }: LinkSettingsProps) {
 
         {currentTab === TABS.INFO && (
           <LinkForm
-            id={link.id}
-            slug={link.slug}
-            url={link.url}
-            onSubmit={onDeleteUpdate}
+            prePopulatedData={{ url: link.url }}
+            handleFormSubmit={async (data) => updateLink(data, link.id)}
           />
         )}
+
         {currentTab === TABS.DELETE && (
-          <DeleteLinkForm id={link.id} onSubmit={onDeleteUpdate} />
+          <DeleteLinkForm onSubmit={() => deleteLink(link.id)} />
         )}
       </dialog>
     </div>

@@ -1,41 +1,46 @@
 "use client";
 
 import { nanoid } from "nanoid";
-import { FormEvent, useState } from "react";
-import { toast } from "sonner";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-import { deleteLink } from "~/lib/services/link.service";
-
-import { Button, TextInput } from "~/components/ui";
 import { DotsSpinner } from "~/components/common";
+import { Button, TextInput } from "~/components/ui";
 
 interface DeleteLinkProps {
-  id: number;
-  onSubmit?: () => void;
+  onSubmit?: () => Promise<void>;
+}
+
+interface DeleteLinkFormValues {
+  verificationCode: string;
 }
 
 export function DeleteLinkForm(props: DeleteLinkProps) {
-  const [randomWord] = useState(nanoid(6));
-  const [deleting, setDeleting] = useState(false);
-  const [inputWord, setInputWord] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    resetField,
+    formState: { errors, isSubmitting },
+  } = useForm<DeleteLinkFormValues>();
+  const [randomVerificationCode, setRandomVerificationCode] = useState(
+    nanoid(6),
+  );
 
-  const handleDeletion = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setDeleting(true);
-
-    if (inputWord !== randomWord) {
-      setDeleting(false);
+  const onSubmit: SubmitHandler<DeleteLinkFormValues> = async ({
+    verificationCode,
+  }) => {
+    if (verificationCode !== randomVerificationCode) {
+      setError("verificationCode", {
+        message: "The verification code entered does not match.",
+      });
       return;
     }
 
-    deleteLink(props.id)
-      .then(() => toast.success("Successfully deleted link!"))
-      .catch(() => toast.error("Something went wrong"))
-      .finally(() => {
-        setDeleting(false);
-        setInputWord("");
-        props.onSubmit?.();
-      });
+    console.log("submitting the form...");
+    await props.onSubmit?.();
+    resetField("verificationCode");
+    setRandomVerificationCode(nanoid(6));
   };
 
   return (
@@ -45,24 +50,31 @@ export function DeleteLinkForm(props: DeleteLinkProps) {
         undone.
       </p>
 
-      <form onSubmit={handleDeletion} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="space-y-2">
-          <label htmlFor="verification" className="block text-zinc-400">
+          <label htmlFor="verification-code" className="block text-zinc-400">
             To verify, type{" "}
-            <span className="font-semibold text-indigo-400">{randomWord}</span>{" "}
+            <span className="font-semibold text-indigo-400">
+              {randomVerificationCode}
+            </span>{" "}
             in the box below.
           </label>
 
           <TextInput
             type="text"
-            id="verification"
-            value={inputWord}
-            onChange={(event) => setInputWord(event.target.value)}
+            id="verification-code"
+            {...register("verificationCode")}
           />
+
+          {errors.verificationCode ? (
+            <span className="text-red-500 font-medium text-sm">
+              {errors.verificationCode.message}
+            </span>
+          ) : null}
         </div>
 
-        <Button type="submit" disabled={deleting} variant="danger">
-          {deleting ? <DotsSpinner /> : "Confirm"}
+        <Button type="submit" disabled={isSubmitting} variant="danger">
+          {isSubmitting ? <DotsSpinner /> : "Confirm"}
         </Button>
       </form>
     </div>

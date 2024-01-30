@@ -22,7 +22,7 @@ export default async function Home() {
               minimalistic and open-source URL shortener
             </p>
           </div>
-          <CreateLinkForm disabled={session == null} />
+          <CreateLinkForm isDisabled={session == null} />
           {session ? <LinksList /> : null}
         </main>
         <Footer />

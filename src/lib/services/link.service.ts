@@ -1,9 +1,11 @@
+import { TLinkSchema } from "../schemas/link";
+
 const API_BASE_URL = "/api/links";
 
-export async function createLink(target: string) {
+async function createLink(data: Partial<TLinkSchema>) {
   const response = await fetch(API_BASE_URL, {
     method: "POST",
-    body: JSON.stringify({ url: target }),
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
@@ -17,7 +19,7 @@ export async function createLink(target: string) {
   return response.json();
 }
 
-export async function deleteLink(linkId: number) {
+async function deleteLink(linkId: number) {
   const response = await fetch(`${API_BASE_URL}/${linkId}`, {
     method: "DELETE",
   });
@@ -27,10 +29,10 @@ export async function deleteLink(linkId: number) {
   }
 }
 
-export async function updateLink(target: string, linkId: number) {
+async function updateLink(data: Partial<TLinkSchema>, linkId: number) {
   const response = await fetch(`${API_BASE_URL}/${linkId}`, {
     method: "POST",
-    body: JSON.stringify({ url: target }),
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
@@ -40,4 +42,10 @@ export async function updateLink(target: string, linkId: number) {
     const errorData = await response.json();
     throw errorData;
   }
+}
+
+export const linkServices = {
+  updateLink,
+  createLink,
+  deleteLink
 }

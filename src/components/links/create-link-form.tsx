@@ -1,93 +1,79 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { mutate } from "swr";
 
-import { STATES } from "~/lib/constants";
-import { parseURL } from "~/lib/functions/urls";
-import { createLink } from "~/lib/services/link.service";
+import { TLinkSchema, linkSchema } from "~/lib/schemas/link";
+import { linkServices } from "~/lib/services/link.service";
 
 import { DotsSpinner } from "~/components/common";
 import { SendIcon } from "~/components/common";
 import { Button, TextInput } from "~/components/ui";
 
 type CreateLinkProps = {
-  disabled: boolean;
+  isDisabled: boolean;
 };
 
 export function CreateLinkForm(props: CreateLinkProps) {
-  const [target, setTarget] = useState("");
-  const [status, setStatus] = useState(STATES.IDLE);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TLinkSchema>({
+    resolver: valibotResolver(linkSchema),
+    disabled: props.isDisabled,
+  });
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTarget(event.target.value);
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setStatus(STATES.LOADING);
-
-    const parsedUrl = parseURL(target);
-    if (!parsedUrl) {
-      setStatus(STATES.ERROR);
-      inputRef.current?.focus();
-      return;
-    }
-
-    createLink(target)
+  const onSubmit: SubmitHandler<TLinkSchema> = (data) => {
+    linkServices
+      .createLink(data)
       .then(() => {
-        setStatus(STATES.SUCCESS);
-        toast.success("Link created successfully.");
+        toast.success("Link created succesfully.");
         mutate("/api/links");
+        reset({ url: "" });
       })
-      .catch((error) => {
-        if (error?.error) {
-          toast.error(error.error);
-          return;
-        }
-
-        toast.error("Link could not be created. Please try again.");
-      })
-      .finally(() => {
-        setStatus(STATES.IDLE);
-        setTarget("");
-      });
+      .catch(() => toast.error("Link could not be created. Please try again."));
   };
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const isLoading = status === STATES.LOADING;
-  const isError = status === STATES.ERROR;
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       className="w-full max-w-lg"
     >
       <div className="relative flex items-center justify-center">
         <TextInput
           type="url"
-          value={target}
-          onChange={handleInputChange}
-          ref={inputRef}
-          aria-invalid={isError ? "true" : undefined}
-          required
+          aria-invalid={errors.url ? "true" : undefined}
           placeholder="https://shortkey.pages.dev"
+          {...register("url")}
         />
 
         <div className="absolute right-2 top-1/2 -translate-y-1/2">
-          <Button
-            type="submit"
-            variant="secondary"
-            disabled={props.disabled || status === STATES.LOADING}
-          >
-            {isLoading ? <DotsSpinner /> : <SendIcon width={22} height={22} />}
-          </Button>
+          {props.isDisabled ? (
+            <Link
+              href="/api/auth/github"
+              className="bg-zinc-700 enabled:hover:bg-zinc-600 min-h-8 w-full cursor-pointer rounded-md px-3 py-1.5"
+            >
+              Login
+            </Link>
+          ) : (
+            <Button
+              type="submit"
+              variant="secondary"
+              disabled={props.isDisabled || isSubmitting}
+            >
+              {isSubmitting ? (
+                <DotsSpinner />
+              ) : (
+                <SendIcon width={22} height={22} />
+              )}
+            </Button>
+          )}
         </div>
       </div>
 
