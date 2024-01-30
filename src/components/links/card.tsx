@@ -50,7 +50,10 @@ export function LinkCard(props: Link) {
       <div className="text-sm text-zinc-400 inline-flex items-center gap-1">
         <p>{formatDate(props.created_at)}</p>
         <span className="hidden sm:block">•</span>
-        <p className="hidden truncate sm:block sm:max-w-40 underline">
+        <p
+          className="hidden truncate sm:block sm:max-w-40 underline"
+          title={props.url}
+        >
           {props.url}
         </p>
       </div>
