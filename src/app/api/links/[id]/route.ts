@@ -1,8 +1,21 @@
 import * as context from "next/headers";
 import { NextResponse } from "next/server";
+import {
+  ValiError,
+  flatten,
+  minValue,
+  number,
+  object,
+  parse,
+  safeParse,
+} from "valibot";
 import { auth } from "~/lib/auth";
 import { deleteLink, updateLink } from "~/lib/database/links";
-import { parseURL } from "~/lib/functions/urls";
+import { linkSchema } from "~/lib/schemas/link";
+
+const paramsSchema = object({
+  id: number([minValue(0)]),
+});
 
 export async function POST(
   request: Request,
@@ -17,34 +30,42 @@ export async function POST(
     );
   }
 
-  const id = parseInt(params.id);
+  const { success, output } = safeParse(paramsSchema, {
+    id: parseInt(params.id),
+  });
+
+  if (!success) {
+    return NextResponse.json(
+      { message: "Validation Failed." },
+      { status: 422 },
+    );
+  }
+
   // biome-ignore lint/suspicious/noImplicitAnyLet:
   let body;
   try {
     body = await request.json();
   } catch (error) {
-    return new Response("Missing or invalid body.", { status: 400 });
-  }
-
-  if (!body.url) {
-    return NextResponse.json(
-      { error: "Missing destination url." },
-      { status: 400 },
-    );
-  }
-
-  const parsedUrl = parseURL(body.url);
-  if (!parsedUrl && typeof parsedUrl !== "string") {
-    return NextResponse.json(
-      { error: "Invalid destination url." },
-      { status: 422 },
-    );
+    return new Response("Body should be a JSON object.", { status: 400 });
   }
 
   try {
-    await updateLink({ userId: session.user.userId, url: parsedUrl, id });
+    const { url } = parse(linkSchema, body);
+
+    await updateLink({
+      userId: session.user.userId,
+      url,
+      id: output.id,
+    });
     return new Response(null, { status: 204 });
   } catch (error) {
+    if (error instanceof ValiError) {
+      return NextResponse.json(
+        { message: "Validation Failed.", errors: flatten(error).root },
+        { status: 422 },
+      );
+    }
+
     return new Response(null, { status: 500 });
   }
 }
@@ -55,7 +76,6 @@ export async function DELETE(
 ) {
   const authRequest = auth.handleRequest(request.method, context);
   const session = await authRequest.validate();
-
   if (!session) {
     return NextResponse.json(
       { error: "You must be authenticated to delete a link." },
@@ -63,16 +83,23 @@ export async function DELETE(
     );
   }
 
-  const linkId = parseInt(params.id);
-  if (!linkId || Number.isNaN(linkId)) {
+  const { success, output } = safeParse(paramsSchema, {
+    id: parseInt(params.id),
+  });
+
+  if (!success) {
     return NextResponse.json(
-      { error: "Missing or invalid fields" },
-      { status: 400 },
+      { message: "Validation Failed." },
+      { status: 422 },
     );
   }
 
   try {
-    await deleteLink({ id: linkId, userId: session.user.userId });
+    await deleteLink({
+      id: output.id,
+      userId: session.user.userId,
+    });
+
     return NextResponse.json(
       { message: "Successfully deleted link." },
       { status: 200 },

@@ -1,8 +1,9 @@
 import * as context from "next/headers";
 import { NextResponse } from "next/server";
+import { ValiError, flatten, parse } from "valibot";
 import { auth } from "~/lib/auth";
 import { createLink, getRandomSlug, getUserLinks } from "~/lib/database/links";
-import { parseURL } from "~/lib/functions/urls";
+import { linkSchema } from "~/lib/schemas/link";
 
 export async function GET(request: Request) {
   const authRequest = auth.handleRequest(request.method, context);
@@ -35,28 +36,14 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch (error) {
-    return new Response("Missing or invalid body.", { status: 400 });
-  }
-
-  if (!body.url) {
-    return NextResponse.json(
-      { error: "Missing destination url." },
-      { status: 400 },
-    );
-  }
-
-  const parsedUrl = parseURL(body.url);
-  if (!parsedUrl && typeof parsedUrl !== "string") {
-    return NextResponse.json(
-      { error: "Invalid destination url." },
-      { status: 422 },
-    );
+    return new Response("Body should be a JSON object.", { status: 400 });
   }
 
   try {
+    const { url } = parse(linkSchema, body);
     await createLink({
       slug: await getRandomSlug(),
-      url: parsedUrl,
+      url,
       userId: session.user.userId,
     });
 
@@ -65,6 +52,13 @@ export async function POST(request: Request) {
       { status: 201 },
     );
   } catch (error) {
+    if (error instanceof ValiError) {
+      return NextResponse.json(
+        { message: "Validation Failed.", errors: flatten(error).nested },
+        { status: 422 },
+      );
+    }
+
     return new Response(null, { status: 500 });
   }
 }
