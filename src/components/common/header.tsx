@@ -9,6 +9,7 @@ export function Header({ session }: { session: Session | null }) {
           <>
             <img
               src={session.user.avatarUrl}
+              className="rounded-full"
               alt="User profile"
               width="36"
               height="36"
