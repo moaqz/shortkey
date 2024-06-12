@@ -1,37 +1,25 @@
 {
   "name": "shortkey",
-  "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "biome lint src/",
-    "format": "biome format src/ --write"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.4",
-    "@libsql/client": "0.4.0-pre.7",
-    "@lucia-auth/adapter-sqlite": "^2.0.1",
-    "@lucia-auth/oauth": "^3.5.2",
-    "lucia": "^2.7.6",
-    "nanoid": "^5.0.4",
-    "next": "14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.49.3",
-    "sonner": "^1.3.1",
-    "swr": "^2.2.4",
-    "valibot": "^0.27.1"
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@types/node": "^20.11.5",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "@antfu/eslint-config": "^2.20.0",
+    "@unocss/eslint-plugin": "^0.60.4",
+    "@unocss/nuxt": "^0.60.4",
+    "eslint": "9.4.0"
   }
 }
