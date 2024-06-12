@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1718225697966,
+      "tag": "0000_superb_sabretooth",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1718228276447,
+      "tag": "0001_large_energizer",
+      "breakpoints": true
+    }
+  ]
+}
