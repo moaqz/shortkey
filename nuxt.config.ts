@@ -30,5 +30,10 @@ export default defineNuxtConfig({
       dark: "media",
     },
     preflight: true,
+    theme: {
+      colors: {
+        peach: "#fab387",
+      },
+    },
   },
 });
