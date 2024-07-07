@@ -1,7 +1,23 @@
+<script setup lang="ts">
+import "@fontsource-variable/inter";
+import { Toaster } from "vue-sonner";
+</script>
+
 <template>
-  <div class="min-h-dvh bg-light-100 text-dark-700 dark:bg-dark-700 dark:text-light-100">
-    <main>
-      <slot />
-    </main>
+  <div class="bg-neutral-900 text-neutral-50">
+    <div class="min-h-dvh max-w-5xl mx-auto px-4 flex flex-col">
+      <SiteHeader />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
   </div>
+  <Toaster rich-colors />
 </template>
+
+<style>
+body {
+  font-family: "Inter Variable", system-ui, sans-serif;
+}
+</style>
