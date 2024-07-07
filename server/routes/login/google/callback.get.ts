@@ -51,7 +51,6 @@ export default defineEventHandler(async (event) => {
       );
 
     if (existingUser) {
-      console.warn("User already exists, updating user...");
       await db
         .update(TABLES.users)
         .set({
@@ -63,7 +62,7 @@ export default defineEventHandler(async (event) => {
 
       const session = await lucia.createSession(existingUser.id, {});
       appendHeader(event, "Set-Cookie", lucia.createSessionCookie(session.id).serialize());
-      return sendRedirect(event, "/");
+      return sendRedirect(event, "/dashboard");
     }
 
     const userId = generateIdFromEntropySize(10);
@@ -78,7 +77,7 @@ export default defineEventHandler(async (event) => {
 
     const session = await lucia.createSession(userId, {});
     appendHeader(event, "Set-Cookie", lucia.createSessionCookie(session.id).serialize());
-    return sendRedirect(event, "/");
+    return sendRedirect(event, "/dashboard");
   }
   catch (e) {
     throw createError({
