@@ -3,7 +3,7 @@ import process from "node:process";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@unocss/nuxt"],
+  modules: ["@unocss/nuxt", "@nuxtjs/seo"],
 
   runtimeConfig: {
     database: {
@@ -35,6 +35,13 @@ export default defineNuxtConfig({
         peach: "#fab387",
       },
     },
+  },
+
+  site: {
+    url: "https://shortkey.pages.dev",
+    name: "Shortkey",
+    description: "Self-hostable, minimalistic, and open-source URL shortener.",
+    defaultLocale: "en",
   },
 
   compatibilityDate: "2024-07-07",
