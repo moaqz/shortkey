@@ -3,10 +3,6 @@ definePageMeta({
   middleware: ["protected"],
 });
 
-useSeoMeta({
-  title: "Dashboard | Shortkey",
-});
-
 const query = ref("");
 const { data } = await useFetch("/api/links");
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 useSeoMeta({
-  title: "Sign In | Shortkey",
+  title: "Sign In",
 });
 
 const user = useUser();
