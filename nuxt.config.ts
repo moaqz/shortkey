@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   },
 
   site: {
-    url: "https://shortkey.pages.dev",
+    url: "https://shortkey.vercel.app",
     name: "Shortkey",
     description: "Self-hostable, minimalistic, and open-source URL shortener.",
     defaultLocale: "en",
