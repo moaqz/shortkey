@@ -18,7 +18,11 @@ export default defineEventHandler(async (event) => {
   }
 
   await db.update(TABLES.links)
-    .set({ slug: link.slug, destinationUrl: link.url })
+    .set({
+      slug: link.slug,
+      destinationUrl: link.url,
+      updatedAt: new Date(),
+    })
     .where(and(
       eq(TABLES.links.id, link.id),
       eq(TABLES.links.userId, userId),

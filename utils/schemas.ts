@@ -1,5 +1,5 @@
 import type { FlatErrors, InferInput } from "valibot";
-import { url as isURL, maxLength, minLength, minValue, number, object, pipe, string } from "valibot";
+import { url as isURL, maxLength, minLength, minValue, number, object, pipe, string, transform } from "valibot";
 
 export const CreateLinkSchema = object({
   url: pipe(
@@ -10,6 +10,7 @@ export const CreateLinkSchema = object({
     string(),
     minLength(3, "The slug must be at least 3 characters long."),
     maxLength(25, "The slug must not exceed 25 characters."),
+    transform(input => input.replaceAll(".", "")),
   ),
 });
 
