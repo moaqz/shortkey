@@ -1,127 +1,41 @@
 <div align="center">
   <a href="#">
-    <img src="public/screenshot.png">
+    <img src="public/screenshot.webp">
   </a>
 </div>
 
-## 🚀 Getting started
+## 🚀 Environment Configuration
 
-### Project settings:
-
-1. **Clone the repository:**
+Create a `.env` file in the root directory of the project. Define the following variables:
 
 ```bash
-git clone git@github.com:moaqz/shortkey.git
+# Google Credentials
+NUXT_OAUTH_GOOGLE_CLIENT_ID=
+NUXT_OAUTH_GOOGLE_CLIENT_SECRET=
+NUXT_OAUTH_GOOGLE_REDIRECT_URI=http://localhost:3000/login/google/callback
+
+# Database
+NUXT_DATABASE_URL=
+NUXT_DATABASE_TOKEN=
+
+# Optional
+NUXT_DATABASE_DEBUG=true 
+NUXT_SESSION_SECURE_COOKIE=true
 ```
 
-2. **Install Dependencies:**
+Database **(required)**:
 
-```bash
-pnpm install
-```
+- [Create database](https://docs.turso.tech/cli/db/create)
+- [Get database token](https://docs.turso.tech/cli/auth/token)
 
-3. **Create a .env file:**
+Google Credentials **(required)**:
 
-Create a `.env` file in the root of the project and add the following variables:
+- [Create a new OAuth 2.0 App from Google API Console](https://developers.google.com/identity/protocols/oauth2?hl=es-419#1.-obtain-oauth-2.0-credentials-from-the-dynamic_data.setvar.console_name-.).
 
-```bash
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
+Optional:
 
-DATABASE_URL=
-DATABASE_TOKEN=
+- `NUXT_DATABASE_DEBUG`: Set to true to enable database debug mode.
+- `NUXT_SESSION_SECURE_COOKIE`: Set to true to enable secure cookies for sessions.
 
-# not required for development
-NEXT_PUBLIC_PRODUCTION_URL=
-```
-
-### Turso Configuration
-
-4. **Set Up Turso:**
-
-Go to [Turso Quickstart](https://docs.turso.tech/quickstart) to create your own database and obtain the token.
-
-```bash
-## Install the Turso CLI
-curl -sSfL https://get.tur.so/install.sh | bash
-
-## Signup to Turso
-turso auth signup
-
-## Create a database
-turso db create mydatabase
-
-# Get the database url
-turso db list
-
-# Get the database token
-turso db tokens create mydatabase
-```
-
-5. **Run Migrations:**
-
-Run the following SQL commands in the Turso CLI:
-
-```bash
-# Access the SQL CLI:
-turso db shell mydatabase
-```
-
-```sql
-CREATE TABLE users (
-  id VARCHAR(15) NOT NULL,
-  username TEXT NOT NULL,
-  avatar TEXT NOT NULL,
-
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE user_keys (
-  id VARCHAR(255) NOT NULL,
-  user_id VARCHAR(15) NOT NULL,
-  hashed_password VARCHAR(255),
-
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE user_sessions (
-  id VARCHAR(127) NOT NULL,
-  user_id VARCHAR(15) NOT NULL,
-  active_expires BIGINT NOT NULL,
-  idle_expires BIGINT NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE links (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-  slug TEXT NOT NULL UNIQUE,
-	url TEXT NOT NULL,
-	clicks INTEGER NOT NULL DEFAULT 0,
-	created_at INTEGER NOT NULL DEFAULT (cast(unixepoch() as int)),
-	user_id varchar(15) NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE INDEX links_slug_idx ON links(slug);
-CREATE INDEX links_user_idx ON links(user_id);
-```
-
-### Github OAuth Provider Settings:
-
-6. **Configure GitHub OAuth:**
-
-- [Create a new GitHub OAuth app](https://github.com/settings/applications/new).
-- Go to "Client secrets" and generate a new client secret. Paste it into the `GITHUB_CLIENT_SECRET` environment variable.
-- Copy the Client ID and paste it into the `GITHUB_ID` environment variable.
-
-### Run the project:
-
-```bash
-pnpm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result 🚀
+> [!WARNING]
+> Ensure all required environment variables are correctly configured before running the application.
