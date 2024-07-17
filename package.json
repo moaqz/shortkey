@@ -17,23 +17,23 @@
     "@libsql/client": "^0.6.2",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@nuxtjs/seo": "2.0.0-rc.11",
-    "arctic": "^1.9.1",
-    "drizzle-orm": "^0.31.2",
+    "arctic": "^1.9.2",
+    "drizzle-orm": "^0.31.4",
     "lucia": "^3.2.0",
     "nuxt": "^3.12.3",
-    "radix-vue": "^1.9.0",
+    "radix-vue": "^1.9.1",
     "valibot": "^0.32.0",
     "vaul-vue": "^0.2.0",
-    "vue": "^3.4.31",
+    "vue": "^3.4.32",
     "vue-router": "^4.4.0",
     "vue-sonner": "^1.1.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.21.3",
+    "@antfu/eslint-config": "^2.23.0",
     "@unocss/eslint-plugin": "^0.60.4",
     "@unocss/nuxt": "^0.60.4",
     "drizzle-kit": "^0.22.8",
     "eslint": "9.4.0",
-    "lefthook": "^1.6.18"
+    "lefthook": "^1.7.2"
   }
 }
