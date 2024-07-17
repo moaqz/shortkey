@@ -18,7 +18,7 @@ const fallback = computed(() => {
   <AvatarRoot>
     <AvatarImage :alt="`${username} profile picture`" :src="profilePicture" class="size-8 rounded-full overflow-hidden" />
     <AvatarFallback
-      class="size-8 flex items-center justify-center rounded-full overflow-hidden bg-peach text-black"
+      class="size-8 rounded-full overflow-hidden flex items-center justify-center bg-peach text-black"
     >
       {{ fallback }}
     </AvatarFallback>

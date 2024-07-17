@@ -5,7 +5,7 @@ import { Toaster } from "vue-sonner";
 
 <template>
   <div class="bg-neutral-900 text-neutral-50">
-    <div class="min-h-dvh max-w-5xl mx-auto px-4 flex flex-col">
+    <div class="mx-auto px-4 flex flex-col min-h-dvh max-w-5xl">
       <SiteHeader />
       <main class="flex-1">
         <slot />

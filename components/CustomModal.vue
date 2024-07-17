@@ -42,12 +42,12 @@ const open = defineModel<boolean>("open", { required: true });
     <DrawerPortal>
       <DrawerOverlay class="bg-neutral-950/40 backdrop-blur-md fixed inset-0 z-50" />
       <DrawerContent
-        class="bg-neutral-900 text-neutral-100 flex flex-col rounded-t-xl h-full mt-24 fixed bottom-0 left-0 right-0 z-50 p-4"
+        class="flex flex-col fixed z-50 bg-neutral-900 text-neutral-100 rounded-t-xl h-full mt-24 bottom-0 left-0 right-0 p-4"
         :style="{ maxHeight }"
       >
-        <div class="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-neutral-300 mb-8" />
+        <div class="rounded-full mx-auto w-12 h-1.5 flex-shrink-0 bg-neutral-300 mb-8" />
 
-        <div class="max-w-md w-full mx-auto flex flex-col gap-y-8">
+        <div class="mx-auto flex flex-col max-w-md w-full gap-y-8">
           <div class="space-y-2">
             <DrawerTitle class="text-xl font-bold">
               {{ title }}
@@ -72,7 +72,7 @@ const open = defineModel<boolean>("open", { required: true });
     <DialogPortal>
       <DialogOverlay class="bg-neutral-950/40 backdrop-blur-md fixed inset-0 z-50" />
       <DialogContent
-        class="z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-neutral-900 text-neutral-100 border border-neutral-800 rounded-md flex flex-col"
+        class="z-50 fixed w-full max-w-md bg-neutral-900 text-neutral-100 rounded-md flex flex-col top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border border-neutral-800"
       >
         <div class="space-y-2 p-6 border-b-neutral-800 border-b text-center">
           <DialogTitle class="text-xl font-bold">

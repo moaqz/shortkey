@@ -39,7 +39,7 @@ const filteredLinks = computed(() => {
 
     <UInput v-if="!showEmptyState" v-model="query" placeholder="Search..." />
 
-    <ul class="grid gap-2 grid-cols-1 md:grid-cols-2">
+    <ul class="gap-2 grid grid-cols-1 md:grid-cols-2">
       <LinkCard v-for="link in filteredLinks" v-bind="link" :key="link.id" />
     </ul>
   </div>

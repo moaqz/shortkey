@@ -11,12 +11,12 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="py-16 border border-neutral-800 rounded-md flex flex-col items-center justify-center space-y-10">
+  <div class="border border-neutral-800 rounded-md flex flex-col items-center justify-center py-16 space-y-10">
     <div class="flex flex-col items-center justify-center text-center gap-2">
       <h2 class="font-semibold text-xl text-balance">
         {{ title }}
       </h2>
-      <p class="px-8 max-w-xl text-base text-balance text-gray-300">
+      <p class="text-balance px-8 max-w-xl text-base text-gray-300">
         {{ description }}
       </p>
     </div>

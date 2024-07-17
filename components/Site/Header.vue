@@ -39,14 +39,14 @@ async function logout() {
         </DropdownMenuTrigger>
 
         <DropdownMenuPortal class="mt-3">
-          <DropdownMenuContent align="end" class="min-w-50 text-neutral-300 bg-neutral-900 border border-neutral-800 rounded py-1">
-            <DropdownMenuItem class="px-3 py-1.5 flex hover:bg-neutral-800 hover:text-neutral-50 transition-colors font-medium" as-child>
+          <DropdownMenuContent align="end" class="bg-neutral-900 border border-neutral-800 rounded py-1 min-w-50 text-neutral-300">
+            <DropdownMenuItem class="px-3 flex hover:bg-neutral-800 transition-colors font-medium py-1.5 hover:text-neutral-50" as-child>
               <NuxtLink to="/dashboard">
                 Dashboard
               </NuxtLink>
             </DropdownMenuItem>
 
-            <DropdownMenuSeparator class="h-px my-1 bg-neutral-800" />
+            <DropdownMenuSeparator class="bg-neutral-800 h-px my-1" />
 
             <DropdownMenuItem
               class="w-full px-3 py-1.5 flex hover:bg-neutral-800 hover:text-neutral-50 transition-colors font-medium" as="button"

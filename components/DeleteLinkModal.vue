@@ -47,7 +47,7 @@ async function onSubmit() {
     <template #trigger>
       <button
         type="button"
-        class="px-2 h-8 rounded text-gray-400 hover:text-gray-50 hover:bg-neutral-800 hover:transition-colors"
+        class="text-gray-400 hover:bg-neutral-800 px-2 h-8 rounded hover:text-gray-50 hover:transition-colors"
         title="Delete link"
       >
         <svg class="size-4">
