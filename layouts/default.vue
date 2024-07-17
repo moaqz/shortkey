@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import "@fontsource-variable/inter";
 import { Toaster } from "vue-sonner";
+
+useHead({
+  link: [
+    { rel: "icon", type: "image/svg+xml", href: "/shortkey.svg" },
+  ],
+});
 </script>
 
 <template>
