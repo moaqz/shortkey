@@ -1,0 +1,8 @@
+services:
+  shortkey:
+    image: moaqz/shortkey:0.1.0
+    container_name: shortkey
+    restart: always
+    env_file: ../.env
+    ports:
+      - "3000:3000"

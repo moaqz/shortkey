@@ -39,3 +39,9 @@ Optional:
 
 > [!WARNING]
 > Ensure all required environment variables are correctly configured before running the application.
+
+## 🐳 Run with Docker in seconds
+
+```bash
+docker run -d --name shortkey -p 3000:3000 --env-file .env moaqz/shortkey:0.1.0
+```
