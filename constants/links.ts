@@ -22,9 +22,4 @@ export const FOOTER_LINKS: FooterLink[] = [
     path: SOCIAL_LINKS.github,
     external: true,
   },
-  {
-    name: "X (Twitter)",
-    path: SOCIAL_LINKS.twitter,
-    external: true,
-  },
 ];
