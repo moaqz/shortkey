@@ -1,3 +1,6 @@
+> [!warning]
+> This project is no longer active and will not receive any updates. The code may contain outdated dependencies or vulnerabilities. It is not recommended for use in production environments, though, can be used for learning purposes.
+
 <div align="center">
   <a href="#">
     <img src="public/screenshot.webp">
